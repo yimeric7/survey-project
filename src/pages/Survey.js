@@ -1,19 +1,24 @@
 import React from 'react';
-import { Container, Nav, Navbar } from 'react-bootstrap';
+import { Container } from 'react-bootstrap';
+import { Navigate } from 'react-router';
+import UserNavBar from '../components/userNavBar';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function SurveyPage() {
-
+    const { currentUser } = useAuth()
+   
     return (
-        <>
-            <Navbar bg="dark" variant="dark" style={{fontSize:"35px"}}>
+        <div> 
+            {currentUser ? (
+                <>  
+                <UserNavBar />
                 <Container>
-                <Navbar.Brand href="/" style={{fontSize:"39px"}}>Myers Briggs</Navbar.Brand>
-                <Nav className="me-auto">           
-                    <Nav.Link href="/signup">Sign Up</Nav.Link>
-                    <Nav.Link href="/login">Login</Nav.Link>
-                </Nav>
+                    
                 </Container>
-            </Navbar>
-        </>
+                </>
+            ) : (
+                <Navigate to="/"></Navigate>
+            )}
+        </div>
     );
 }

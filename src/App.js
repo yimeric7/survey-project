@@ -5,6 +5,7 @@ import LoginPage from "./pages/Login";
 import SignupPage from "./pages/Signup";
 import { AuthProvider } from './contexts/AuthContext'
 import SurveyPage from './pages/Survey';
+import ResultPage from './pages/Results';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/survey" element={<SurveyPage />} />
+        <Route path="/results" element={<ResultPage />} />
       </Routes>
     </AuthProvider>
   );
