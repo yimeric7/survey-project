@@ -10,7 +10,7 @@ export default function UserNavBar() {
             <Container>
             <Navbar.Brand href="/" style={{fontSize:"39px"}}>Myers Briggs</Navbar.Brand>
             <Nav className="me-auto">           
-                <Nav.Link href="/results">Results</Nav.Link>
+                <Nav.Link href="/profile">Profile</Nav.Link>
                 <Nav.Link onClick={logout} href="/">Logout</Nav.Link>
             </Nav>
             </Container>

@@ -32,10 +32,10 @@ export default function SignupPage() {
         <NewNavBar />
         <AuthProvider>
             <Container
-            className="d-flex align-items-center justify-content-center"
-            style={{ minHeight: "100vh" }}
+            className="d-flex  justify-content-center"
+            style={{ minHeight: "100vh", paddingTop: '50px' }}
             >   
-                <span className="w-100" style={{ maxWidth: '400px' }}>
+                <span className="w-100" style={{ maxWidth: '400px'}}>
                     <Card>
                         <Card.Body>
                             <h2 className="text-center mb-3">Sign up</h2>

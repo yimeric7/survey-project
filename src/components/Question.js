@@ -1,40 +1,31 @@
-import React, { useState } from 'react';
 
-export default function Question({ question }) {
-    const [survey, setSurvey] = useState(new Map());
-
+export default function Question({ options, question, id, handleChange }) {
     return (
         <div>
             <br>
             </br>
             <form>
                 <fieldset>
-                    <h2>{question.id}. {question.question}</h2>
+                    <h2>{id}. {question}</h2>
                     <p>
                         <input 
                             type="radio" 
-                            id={question.id} 
+                            id={id} 
                             name="option"
                             value="A" 
-                            onChange={(e) => {
-                                setSurvey(survey.set(e.target.id, e.target.value));
-                                console.log(survey);
-                            }}
+                            onChange={(e) => handleChange(parseInt(e.target.id), e.target.value) }
                             />
-                        <label for={question.id}>{question.options[0]}</label>
+                        <label htmlFor={id} style={{paddingLeft:"10px"}} >{options[0]}</label>
                     </p>
                     <p>
                         <input 
                             type="radio" 
-                            id={question.id} 
+                            id={id} 
                             name="option"
                             value="B" 
-                            onChange={(e) => {
-                                setSurvey(survey.set(e.target.id, e.target.value));
-                                console.log(survey);
-                            }}
+                            onChange={(e) => handleChange(parseInt(e.target.id), e.target.value)}
                             />
-                        <label for={question.id}>{question.options[1]}</label>
+                        <label htmlFor={id} style={{paddingLeft:"10px"}}>{options[1]}</label>
                     </p>
                 </fieldset>
             </form>
