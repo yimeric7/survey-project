@@ -1,20 +1,27 @@
 import { useNavigate } from "react-router"
 import { Button } from 'react-bootstrap'
+import './Result.css'
 
 export default function Result({ result }) {
     const navigate = useNavigate()
 
+    console.log(result)
+
     const handleClick = (e) => {
         e.preventDefault()
 
-        // input into database 
-        const finalAnswers = Array.from(result).sort((a,b) => a[0]-b[0])
+        const finalAnswers = result.results
         navigate('/results', {state: finalAnswers})
     }
 
     return (
-        <Button onClick={handleClick}>
-            SHOW RESULTS
-        </Button>
+        <div className='Result' >
+            <div>
+                <solid> Previous Survey </solid>
+                <Button onClick={handleClick} variant="dark">
+                    Show Results
+                </Button>
+            </div>
+        </div>
     )
 }
