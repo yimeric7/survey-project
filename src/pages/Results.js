@@ -1,44 +1,36 @@
 import React, { useEffect, useState } from "react";
 import UserNavBar from "../components/userNavBar";
 import { useAuth } from '../contexts/AuthContext'
-import { useNavigate, useLocation } from "react-router";
+import { Navigate, useLocation } from "react-router";
 import { calculateAnswers } from "../backend/surveyCalculation";
 import { Container, Card } from "react-bootstrap";
 
 export default function ResultPage( ) {
     const { currentUser } = useAuth()
-    const navigate = useNavigate()
     const [mind, setMind] = useState("")
     const [energy, setEnergy] = useState("")
     const [nature, setNature] = useState("")
     const [tactics, setTactics] = useState('')
-    const [personalityTypes, setPersonalityTypes] = useState([])
-
-    useEffect(() => {
-        if (currentUser === null)
-            navigate('/')
-    })
-
     const answers = useLocation()
-    if (currentUser)
-        setPersonalityTypes(calculateAnswers(answers.state))
 
     useEffect(() => {
+        const personalityTypes = calculateAnswers(answers.state)
         setMind(personalityTypes[0])
         setEnergy(personalityTypes[1])
         setNature(personalityTypes[2])
         setTactics(personalityTypes[3])
-    }, [personalityTypes])
+    }, [currentUser])
 
     return (
         <div>
-            <div>
-                <UserNavBar />
-                <h1 align="center" style={{fontSize:'100px', paddingTop:'100px'}}>RESULTS</h1>
-                <Container
-                    className="d-flex align-items-center justify-content-center"
-                    style={{ minHeight: "45vh", fontSize: '30px' }}
-                >
+            {currentUser ? (
+                <div>
+                    <UserNavBar />
+                    <h1 align="center" style={{fontSize:'100px', paddingTop:'100px'}}>RESULTS</h1>
+                    <Container
+                        className="d-flex align-items-center justify-content-center"
+                        style={{ minHeight: "45vh", fontSize: '30px' }}
+                    >
                     <span className="w-100" style={{ maxWidth: '400px', backgroundColor: '#F5FFFA', textAlign: "center"}}>
                         <Card>
                             {mind==="Introverted" ? (
@@ -61,7 +53,7 @@ export default function ResultPage( ) {
                         </Card>
                     </span>
 
-                    <span className="w-100" style={{ maxWidth: '400px', backgroundColor: '#F5FFFA', textAlign: "center"}}>
+                        <span className="w-100" style={{ maxWidth: '400px', backgroundColor: '#F5FFFA', textAlign: "center"}}>
                         <Card>
                             {energy==="Intuitive" ? (
                                 <Card.Body>
@@ -74,16 +66,16 @@ export default function ResultPage( ) {
                                 <Card.Body>
                                     <h1>Sensing</h1>
                                     <p>
-                                    down-to-earth, rely on their senses,
-                                    absorbed in practical
-                                    matters, focus on what has happened.
+                                        down-to-earth, rely on their senses,
+                                        absorbed in practical
+                                        matters, focus on what has happened.
                                     </p>
                                 </Card.Body>
                             )}
                         </Card>
                     </span>
 
-                    <span className="w-100" style={{ maxWidth: '400px', backgroundColor: '#F5FFFA', textAlign: "center"}}>
+                        <span className="w-100" style={{ maxWidth: '400px', backgroundColor: '#F5FFFA', textAlign: "center"}}>
                         <Card>
                             {nature==="Feeling" ? (
                                 <Card.Body>
@@ -95,14 +87,14 @@ export default function ResultPage( ) {
                                 <Card.Body>
                                     <h1>Thinking</h1>
                                     <p>
-                                    tough, follow their minds, focus on objectivity and rationality.
+                                        tough, follow their minds, focus on objectivity and rationality.
                                     </p>
                                 </Card.Body>
                             )}
                         </Card>
                     </span>
 
-                    <span className="w-100" style={{ maxWidth: '400px', backgroundColor: '#F5FFFA', textAlign: "center"}}>
+                        <span className="w-100" style={{ maxWidth: '400px', backgroundColor: '#F5FFFA', textAlign: "center"}}>
                         <Card>
                             {tactics==="Judging" ? (
                                 <Card.Body>
@@ -121,8 +113,11 @@ export default function ResultPage( ) {
                             )}
                         </Card>
                     </span>
-                </Container>
-            </div>
+                    </Container>
+                </div>
+            ) : (
+                <Navigate to='/error'></Navigate>
+            )}
         </div>
     )
 }

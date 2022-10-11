@@ -6,30 +6,23 @@ import { ref, onValue } from "firebase/database";
 import { db } from "../backend/Firebase";
 import { Link } from 'react-router-dom'
 import Result from '../components/displayResult'
-import {useNavigate} from "react-router";
+import {Navigate} from "react-router";
 
 export default function ProfilePage() {
     const { currentUser } = useAuth();
-    const navigate = useNavigate()
     const [results, setResults] = useState([])
-    const [allResults, setAllResults] = useState([])
-
-    useEffect (() => {
-        if (currentUser === null)
-            navigate('/')
-    })
 
     useEffect(() => {
         try {
             onValue(ref(db, `surveys/${currentUser.email}`.slice(0, -4)), (snapshot) => {
                 setResults(snapshot.val())
             });
-            setAllResults(Object.keys(results).map((key) => [key, results[key]]))
-        }
-        catch (e) {
+        } catch (e) {
             console.log(e)
         }
-    }, [results])
+    }, [currentUser])
+
+    const allResults = Object.keys(results).map((key) => [key, results[key]])
 
     return (
         <div>
@@ -69,9 +62,7 @@ export default function ProfilePage() {
                         </section>
                     </Container>
                 </>
-                ) : (
-                    <>
-                    </>
+                ) : ( <Navigate to='/'> </Navigate>
             )}
         </div>
     )
